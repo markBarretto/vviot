@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var gpio = require("pi-gpio");
+var motion = require('../classes/motion.js');
 
 router.get('/', function(req, res, next) {
-//  res.render('index', { title: 'Express' });
+  res.send(motion);	
+  //res.render('index', { title: 'Express' });
 });
 
 module.exports = router;
