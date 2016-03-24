@@ -1,4 +1,4 @@
-var motorMovement = require('/motorMovement');
+var motorMovement = require('../classes/motor.js');
 
 var TwoMotorMovement = function(dia, dist){
    this.leftMotor = new motorMovement(2,3,1,200);
