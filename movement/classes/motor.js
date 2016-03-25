@@ -12,10 +12,10 @@ MotorMovement.prototype.move = function(reverse){
    var deferred = q.defer();
    direction = (reverse!=undefined);
    
-   this.write(this.movement, true).then(function(){
+   this.writeMovementPin(true).then(function(){
       setTimeout(function(){
-         this.write(this.direction, direction).then(function(){
-            this.write(this.movement, false).then(function(){
+         this.writeDirectionPin(direction).then(function(){
+            this.writeMovementPin().then(function(){
                deferred.resolve('moved');
             })
          }, function(err){
@@ -28,10 +28,26 @@ MotorMovement.prototype.move = function(reverse){
    return deferred.promise;
 }
 
-MotorMovement.prototype.init = function(){
-   gpio.setup(this.movement, gpio.DIR_OUT, this.write(this.movement));
-   gpio.setup(this.direction, gpio.DIR_OUT, this.write(this.direction));
+MotorMovement.prototype.writeDirectionPin = function(input){
+   var val = (input!=undefined);
+   var deferred = q;
+   gpio.setup(this.direction, gpio.DIR_OUT, function(){
+      this.write(this.direction, val)
+      deferred.resolve();
+   });
+   return deferred.promise;
 }
+
+MotorMovement.prototype.writeMovementPin = function(input){
+   var val = (input!=undefined);
+   var deferred = q;
+   gpio.setup(this.movement, gpio.DIR_OUT, function(){
+      this.write(this.movement, val)
+      deferred.resolve();
+   });
+   return deferred.promise;
+}
+
 
 MotorMovement.prototype.write = function(input, value){
    var deferred = q.defer();
