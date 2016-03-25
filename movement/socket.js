@@ -1,4 +1,4 @@
-var Motion = require('./classes/Motion');
+var Motion = require('./classes/motion.js');
 
 var socket = function(io){
 	var botMove = new Motion();

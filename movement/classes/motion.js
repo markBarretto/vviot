@@ -1,6 +1,6 @@
 module.exports = Motion;
 
-var MotorMovement = require('../classes/Motor');
+var MotorMovement = require('../classes/motor.js');
 
 function Motion(dia, dist){
 	this.leftMotor = new MotorMovement(2,3,1,200);
