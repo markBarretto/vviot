@@ -29,6 +29,20 @@ MotorMovement.prototype.writeMovementPin = function(input){
 }
 
 
+MotorMovement.prototype.write = function(input, value){
+   var deferred = q.defer();
+   gpio.write(input, value, function(err) {
+      if(err){
+         throw err;
+         deferred.reject(err);
+      } else {
+         deferred.resolve('Written to pin');
+      }
+   });
+
+   return deferred.promise;
+}
+
 MotorMovement.prototype.move = function(reverse){
    var deferred = q.defer();
    direction = (reverse!=undefined);
@@ -45,20 +59,6 @@ MotorMovement.prototype.move = function(reverse){
       }, this.speed);
    })
    
-
-   return deferred.promise;
-}
-
-MotorMovement.prototype.write = function(input, value){
-   var deferred = q.defer();
-   gpio.write(input, value, function(err) {
-      if(err){
-         throw err;
-         deferred.reject(err);
-      } else {
-         deferred.resolve('Written to pin');
-      }
-   });
 
    return deferred.promise;
 }
