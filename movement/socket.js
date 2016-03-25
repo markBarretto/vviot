@@ -17,6 +17,7 @@ var socket = function(io){
   		socket.on('control:move', function (data) {
   			queue.push({'move':data});
   			sendUpdatedQueue(queue);
+        botMove.leftMotor.move();
     	});
     	socket.on('control:turn', function(data){
     		queue.push({'turn':data});
