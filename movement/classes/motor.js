@@ -45,18 +45,19 @@ MotorMovement.prototype.write = function(input, value){
 
 MotorMovement.prototype.move = function(reverse){
    var deferred = q.defer();
+   var t = this;
    direction = (reverse!=undefined);
    
    this.writeMovementPin(true).then(function(){
       setTimeout(function(){
-         this.writeDirectionPin(direction).then(function(){
-            this.writeMovementPin().then(function(){
+         t.writeDirectionPin(direction).then(function(){
+            t.writeMovementPin().then(function(){
                deferred.resolve('moved');
             })
          }, function(err){
             deferred.reject(err);  
          });
-      }, this.speed);
+      }, t.speed);
    })
    
 
