@@ -8,26 +8,6 @@ function MotorMovement(movement, direction, speed, steps){
    this.stepsPerRotation = steps;
 }
 
-MotorMovement.prototype.move = function(reverse){
-   var deferred = q.defer();
-   direction = (reverse!=undefined);
-   
-   this.writeMovementPin(true).then(function(){
-      setTimeout(function(){
-         this.writeDirectionPin(direction).then(function(){
-            this.writeMovementPin().then(function(){
-               deferred.resolve('moved');
-            })
-         }, function(err){
-            deferred.reject(err);  
-         });
-      }, this.speed);
-   })
-   
-
-   return deferred.promise;
-}
-
 MotorMovement.prototype.writeDirectionPin = function(input){
    var val = (input!=undefined);
    var deferred = q;
@@ -48,6 +28,26 @@ MotorMovement.prototype.writeMovementPin = function(input){
    return deferred.promise;
 }
 
+
+MotorMovement.prototype.move = function(reverse){
+   var deferred = q.defer();
+   direction = (reverse!=undefined);
+   
+   this.writeMovementPin(true).then(function(){
+      setTimeout(function(){
+         this.writeDirectionPin(direction).then(function(){
+            this.writeMovementPin().then(function(){
+               deferred.resolve('moved');
+            })
+         }, function(err){
+            deferred.reject(err);  
+         });
+      }, this.speed);
+   })
+   
+
+   return deferred.promise;
+}
 
 MotorMovement.prototype.write = function(input, value){
    var deferred = q.defer();
