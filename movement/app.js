@@ -5,16 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var movement = require('./routes/movement');
+//var routes = require('./routes/index');
+//var movement = require('./routes/movement');
 
 var app = express();
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
-app.set('views', __dirname+ '/public');
-app.engine('html', require('ejs').renderFile);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+//app.set('views', __dirname+ '/public');
+//app.engine('html', require('ejs').renderFile);
 app.use(express.static( __dirname + '/public' ));
 
 // uncomment after placing your favicon in /public
@@ -30,10 +31,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.get('/', function(req, res){
+  res.render('index.html');
+});
 
 
-app.use('/', routes);
-app.use('/movement', movement);
+//app.use('/', routes);
+//app.use('/movement', movement);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,6 +69,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
