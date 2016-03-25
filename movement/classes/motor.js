@@ -11,8 +11,9 @@ function MotorMovement(movement, direction, speed, steps){
 MotorMovement.prototype.writeDirectionPin = function(input){
    var val = (input!=undefined);
    var deferred = q;
+   var t = this;
    gpio.setup(this.direction, gpio.DIR_OUT, function(){
-      this.write(this.direction, val)
+      t.write(this.direction, val)
       deferred.resolve();
    });
    return deferred.promise;
@@ -21,8 +22,9 @@ MotorMovement.prototype.writeDirectionPin = function(input){
 MotorMovement.prototype.writeMovementPin = function(input){
    var val = (input!=undefined);
    var deferred = q;
+   var t = this;
    gpio.setup(this.movement, gpio.DIR_OUT, function(){
-      this.write(this.movement, val)
+      t.write(this.movement, val)
       deferred.resolve();
    });
    return deferred.promise;
