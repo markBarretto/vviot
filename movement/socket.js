@@ -14,15 +14,28 @@ var socket = function(io){
 		socket.on('disconnect', function(){
     		console.log('user disconnected');
   		});
+
   		socket.on('control:move', function (data) {
   			queue.push({'move':data});
   			sendUpdatedQueue(queue);
-        botMove.leftMotor.move();
-    	});
-    	socket.on('control:turn', function(data){
-    		queue.push({'turn':data});
-    		sendUpdatedQueue(queue);
-    	});
+        		botMove.leftMotor.step();
+
+			switch(data){
+				case 'forward':
+		        		botMove.leftMotor.step();
+				break;
+				case 'back':
+        				botMove.leftMotor.step(1);
+				break;
+				default:
+				break;
+			}
+    		});
+
+    		socket.on('control:turn', function(data){
+    			queue.push({'turn':data});
+    			sendUpdatedQueue(queue);
+    		});
 	});
 }
 

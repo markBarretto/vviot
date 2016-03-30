@@ -1,69 +1,30 @@
-var gpio = require('rpi-gpio');
+var Gpio = require('onoff').Gpio;
 var q = require('q');
 
-function MotorMovement(movement, direction, speed, steps){
-   this.movement = movement;
-   this.direction = direction;
-   this.speed = speed;
+function MotorMovement(movement, direction, interval, steps){
+   this.dirPin = new Gpio(2, 'out');
+   this.movPin = new Gpio(3, 'out');
+   this.interval = interval;
    this.stepsPerRotation = steps;
 }
 
-MotorMovement.prototype.writeDirectionPin = function(input){
-   var val = (input!=undefined);
+MotorMovement.prototype.step = function(input){
    var deferred = q;
    var t = this;
-   gpio.setup(t.direction, gpio.DIR_OUT, function(){
-      t.write(t.direction, val)
-      deferred.resolve();
-   });
-   return deferred.promise;
-}
-
-MotorMovement.prototype.writeMovementPin = function(input){
-   var val = (input!=undefined);
-   var deferred = q;
-   var t = this;
-   gpio.setup(t.movement, gpio.DIR_OUT, function(){
-      t.write(t.movement, val)
-      deferred.resolve();
-   });
-   return deferred.promise;
-}
-
-
-MotorMovement.prototype.write = function(input, value){
-   var deferred = q.defer();
-   gpio.write(input, value, function(err) {
-      if(err){
-         throw err;
-         deferred.reject(err);
-      } else {
-         deferred.resolve('Written to pin');
-      }
-   });
-
-   return deferred.promise;
-}
-
-MotorMovement.prototype.move = function(reverse){
-   var deferred = q.defer();
-   var t = this;
-   direction = (reverse!=undefined);
+   var val = 0;
    
-   t.writeMovementPin(true).then(function(){
-      setTimeout(function(){
-         t.writeDirectionPin(direction).then(function(){
-            t.writeMovementPin().then(function(){
-               deferred.resolve('moved');
-            })
-         }, function(err){
-            deferred.reject(err);  
-         });
-      }, t.speed);
-   })
-   
+   if(input!=undefined){
+      val = 1;
+   }
+   if(t.dirPin.readSync != val){
+      t.dirPin.writeSync(val);
+   }
 
-   return deferred.promise;
+   if(t.movPin.readSync()===1){
+      t.movPin.writeSync(0);
+   };
+
+   setTimeout(t.movPin.writeSync(1), t.interval);
 }
 
 module.exports = MotorMovement;
