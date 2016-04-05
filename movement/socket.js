@@ -18,14 +18,13 @@ var socket = function(io){
   		socket.on('control:move', function (data) {
   			queue.push({'move':data});
   			sendUpdatedQueue(queue);
-        		botMove.leftMotor.step();
 
-			switch(data){
+			switch(data.direction){
 				case 'forward':
-		        		botMove.leftMotor.step();
+                                        botMove.move(undefined, 400);
 				break;
 				case 'back':
-        				botMove.leftMotor.step(1);
+                                        botMove.move(1, 400);
 				break;
 				default:
 				break;
@@ -35,6 +34,17 @@ var socket = function(io){
     		socket.on('control:turn', function(data){
     			queue.push({'turn':data});
     			sendUpdatedQueue(queue);
+
+			switch(data.direction){
+				case 'left':
+                                        botMove.turn(undefined, 400);
+				break;
+				case 'right':
+                                        botMove.turn(1, 400);
+				break;
+				default:
+				break;
+			}
     		});
 	});
 }
