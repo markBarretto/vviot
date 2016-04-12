@@ -1,8 +1,9 @@
 var Motion = require('./classes/motion.js');
+var QueueCommand = require('./classes/queueCommand.js');
 
 var socket = function(io){
 	var botMove = new Motion();
-	var queue = [];
+	var queue = botMove.queue;
 
 	var sendUpdatedQueue = function(queue){
 		io.sockets.emit('control:queue', {'queue':queue});
@@ -16,10 +17,11 @@ var socket = function(io){
   		});
 
   		socket.on('control:move', function (data) {
-  			queue.push({'move':data});
-  			sendUpdatedQueue(queue);
+  			queue.push(new QueueCommand(data.type, data.direction, data.steps));
+			
+			sendUpdatedQueue(queue);
 
-			switch(data.direction){
+			/*switch(data.direction){
 				case 'forward':
                                         botMove.move(undefined, 400);
 				break;
@@ -28,13 +30,20 @@ var socket = function(io){
 				break;
 				default:
 				break;
-			}
+			}*/
+			
+
     		});
 
-    		socket.on('control:turn', function(data){
-    			queue.push({'turn':data});
-    			sendUpdatedQueue(queue);
+		socket.on('control:exec', function (data) {
+			botMove.execQueue(data);
+		});
 
+
+    		socket.on('control:turn', function(data){
+    			queue.push(new QueueCommand(data.type, data.direction, data.steps));
+    			sendUpdatedQueue(queue);
+/*
 			switch(data.direction){
 				case 'left':
                                         botMove.turn(undefined, 400);
@@ -45,7 +54,7 @@ var socket = function(io){
 				default:
 				break;
 			}
-    		});
+*/    		});
 	});
 }
 

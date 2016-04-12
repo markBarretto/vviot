@@ -9,11 +9,15 @@
     	});
 
 		vm.move = function(direction){
-			socket.emit('control:move', {direction: direction});
+			socket.emit('control:move', {direction: direction, steps: 200, type: "move"});
 		}
 
 		vm.turn = function(direction){
-			socket.emit('control:turn', {direction: direction});
+			socket.emit('control:turn', {direction: direction, steps: 200, type: "turn"});
+		}
+
+		vm.exec = function(direction){
+			socket.emit('control:exec', {direction: direction});
 		}
 
 	})
