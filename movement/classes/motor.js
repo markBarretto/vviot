@@ -45,8 +45,7 @@ MotorMovement.prototype.move = function(direction, steps){
       return t.step(direction).then(function(){
          setTimeout(function(){
             if(count <= steps){
-               console.log(count);
-
+               
                step(direction);
                count++;
             } else {
