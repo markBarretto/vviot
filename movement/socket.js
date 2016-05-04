@@ -17,9 +17,11 @@ var socket = function(io){
   		});
 
   		socket.on('control:move', function (data) {
-  			queue.push(new QueueCommand(data.type, data.direction, data.steps));
-			
-			sendUpdatedQueue(queue);
+  			//queue.push(new QueueCommand(data.type, data.direction, data.steps));
+			botMove.queue.push(new QueueCommand(data.type, data.direction, data.steps));
+			sendUpdatedQueue(botMove.queue);
+			console.log('forward pressed');
+			console.log(botMove.queue.length);
 
 			/*switch(data.direction){
 				case 'forward':
@@ -38,11 +40,19 @@ var socket = function(io){
 		socket.on('control:exec', function (data) {
 			botMove.execQueue(data);
 		});
-
+		
+		socket.on('control:clear', function (data) {
+			//queue = [];
+			botMove.queue = [];
+			sendUpdatedQueue(botMove.queue);
+		        console.log('clear pressed');
+			console.log(botMove.queue.length);
+		});
 
     		socket.on('control:turn', function(data){
-    			queue.push(new QueueCommand(data.type, data.direction, data.steps));
-    			sendUpdatedQueue(queue);
+    			botMove.queue.push(new QueueCommand(data.type, data.direction, data.steps));
+    			sendUpdatedQueue(botMove.queue);
+			console.log(botMove.queue);
 /*
 			switch(data.direction){
 				case 'left':

@@ -1,8 +1,152 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica Neue, sans-serif;
+  text-align: center;
+  font-size: 14px;
+  line-height: 17px;
+  word-wrap: break-word;
 }
 
 a {
   color: #00B7FF;
+}
+
+.cctv {
+  overflow: hidden;
+  border-style: solid;
+  border-width: 11px;
+  border-color: #EEEEEE;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+  background-color: #000000;
+  position: relative;
+  z-index: 10;
+}
+
+.header-title {
+  border-width: 0px;
+  border-color: transparent;
+  background-color: transparent;
+  position: relative;
+  min-height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  color: #C8F8FF;
+  width: 100%;
+}
+
+.action-text {
+  width: 100%;
+  min-height: 40px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C8F8FF;
+  padding: 6px;
+  color: #4F4F4F;
+  line-height: 14px;
+  font-family: Georgia, Palatino, Palatino Linotype, Times, Times New Roman, serif;
+  font-style: italic;
+  position: relative; 
+  overflow: auto;
+  background-color: white;
+}
+
+.section-title {
+  color: #C8F8FF;
+  line-height: 48px;
+  min-height: 46px;
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.41), 0px 0px 10px rgba(255, 255, 255, 0.41);
+  font-weight: bold;
+  box-shadow: none;
+  background-color: transparent;
+  position: relative;
+  font-size: 40px;
+  width: 100%;
+}
+
+.button-style {
+  background: url('/images/button-bg.png');
+  height: 60px;
+  width: 155px;
+  border-radius: 10px;
+  color: white;
+  margin: 10px;
+  opacity: 1;
+  z-index: 99;
+}
+
+.button-command {
+  background-color: #800000;
+  height: 50px;
+  width: 100px;
+  border-radius: 10px;
+  color: white;
+  margin-top: -20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  opacity: 1;
+  z-index: 99; 
+}
+
+.controls-container {
+  margin: 20px;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+.bg-container {
+  background: url('/images/controls-bg.png');
+  opacity: 0.8;
+}
+
+.center-flex {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.leftright-position {
+  clear: both;
+  display: flex;
+  width: 100%;
+}
+
+.left-position {
+  float: left;
+  
+}
+
+.right-position {
+  float: left;  
+}
+
+.execforwardclear-position {
+  clear: both;  
+  display: flex;
+  width: 100%;
+}
+
+.forward-position {
+  float: left;
+}
+
+.back-position {
+  clear: both;
+}
+
+.exec-position {
+  float: left;
+}
+
+.clear-position {
+  float: left;
+}
+
+.joystick-style {
+  background-image: url('/images/circle-middle.png');
+  background-size: 50px 50px;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  float: left;
 }

@@ -5,8 +5,8 @@ var QueueCommand = require('../classes/queueCommand.js');
 var MotorMovement = require('../classes/motor.js');
 
 function Motion(dia, dist){
-	this.leftMotor = new MotorMovement(3,2,2,200);
-	this.rightMotor = new MotorMovement(14,15,2,200);
+	this.leftMotor = new MotorMovement(3,2,2,600);
+	this.rightMotor = new MotorMovement(14,15,2,600);
 	this.wheelDiameter = dia;
 	this.distanceBetweenWheels = dist; 
    this.queue = [];
@@ -24,9 +24,18 @@ Motion.prototype.move = function(direction, steps){
    var dir;
    var deferred = q.defer(); 
    try{
-      direction == undefined? dir = 1: dir = undefined;
-      t.leftMotor.move(dir, steps);
-      t.rightMotor.move(direction, steps);
+      //direction == undefined? dir = 1: dir = undefined;
+      if(direction != undefined)
+      {
+	if(direction == 'forward'){
+      	t.leftMotor.move('right', steps);
+      	t.rightMotor.move('left', steps);
+	}
+	else{
+	t.leftMotor.move('left', steps);
+	t.rightMotor.move('right', steps);
+	}
+      }
       deferred.resolve('move complete');
    } catch(e){
       deferred.reject(e);
@@ -49,9 +58,16 @@ Motion.prototype.turn = function(direction, steps){
    return deferred.promise; 
 }
 
+Motion.prototype.clearQueue = function(){
+   this.queue = [];
+}
+
 Motion.prototype.execQueue = function(){
    var t = this;
    var queue = t.queue;
+
+   console.log('queue count');
+   console.log(queue.length);
 
    for(var i=0; i<queue.length; i++) {
       var queueCommand = queue[i];

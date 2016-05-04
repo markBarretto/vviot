@@ -1,6 +1,41 @@
-<div>{{vm.queue}}</div>
-<input type="button" value="left" ng-click="vm.turn('left')"></input>
-<input type="button" value="right" ng-click="vm.turn('right')" ></input>
-<input type="button" value="back" ng-click="vm.move('back')"></input>
-<input type="button" value="forward" ng-click="vm.move('forward')"></input>
-<input type="button" value="exec" ng-click="vm.exec()"></input>
+<div class="controls-container">
+     <div>
+	<label class="header-title center-flex">
+		ACTIONS
+	</label>
+	<div class="action-text center-flex">
+		{{vm.queue}}
+	</div>
+	<div class="section-title center-flex">
+		CONTROLS		
+	</div>
+
+	<div class="execforwardclear-position center-flex">
+		<div class="exec-position center-flex" >
+			<input type="button" value="EXEC" ng-click="vm.exec()" class="button-command"></input>
+		</div>
+	
+		<div class="forward-position center-flex">
+			<input type="button" value="FORWARD" ng-click="vm.move('forward')" class="button-style"></input>
+		</div>
+
+		<div class="clear-position center-flex">
+			<input type="button" value="CLEAR" ng-click="vm.clear()" class="button-command"></input>
+		</div>
+	</div>
+	<div class="leftright-position center-flex">
+		<div class="left-position">
+			<input type="button" value="LEFT" ng-click="vm.turn('left')" class="button-style"></input>
+		</div>
+		<div class="joystick-style"></div>
+		<div class="right-position">
+			<input type="button" value="RIGHT" ng-click="vm.turn('right')" class="button-style"></input>
+		</div>
+	</div>
+	<div class="back-position center-flex">
+		<input type="button" value="BACK" ng-click="vm.move('back')" class="button-style"></input>
+	</div>
+	
+	
+     </div>
+</div>

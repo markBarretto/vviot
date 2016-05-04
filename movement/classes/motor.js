@@ -13,8 +13,14 @@ MotorMovement.prototype.step = function(input){
    var t = this;
    var val = 0;
 
+
    if(input!=undefined){
-      val = 1;
+      if(input == 'right')
+      	val = 0;
+      else
+        val = 1;
+
+      //console.log('dir: ' + input);
    }
 
    try {
